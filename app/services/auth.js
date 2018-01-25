@@ -11,7 +11,7 @@ var jwt = require('jsonwebtoken');
 var config = require('../../config');
 
 var User = require('../models/user');
-var CryptoService = require('../services/crypto.service');
+var CryptoService = require('../services/crypto');
 
 
 exports.createToken = function (user) {

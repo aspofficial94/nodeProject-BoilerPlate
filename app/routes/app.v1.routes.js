@@ -1,11 +1,11 @@
 'use strict'
 
-var userController = require('../contollers/user.server.controller');
+var userController = require('../contollers/user');
 var middlewares = require('../middlewares/authorization');
 
 var app = require('express').Router();
 
-var uploadService = require('../services/upload.service');
+var uploadService = require('../services/upload');
 
 app.post('/register', uploadService.uploadFileToS3.single("profilePicture"), userController.registerUser);
 

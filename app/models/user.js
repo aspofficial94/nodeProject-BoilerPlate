@@ -1,6 +1,9 @@
 "use strict";
 
-var crypto = require("crypto"), _ = require("lodash"), mongoose = require("mongoose"), Schema = mongoose.Schema;
+var crypto = require("crypto")
+var _ = require("lodash");
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
 var uniqueValidator = require("mongoose-unique-validator");
 
@@ -61,28 +64,28 @@ UserSchema.plugin(uniqueValidator, {
 });
 
 UserSchema.virtual("password")
-	.set(function(password) {
+	.set(function (password) {
 		this._password = String(password);
 		this.salt = this.makeSalt();
 		this.hashed_password = this.encryptPassword(this._password);
 	})
-	.get(function() {
+	.get(function () {
 		return this._password;
 	});
 
 UserSchema.methods = {
-	authenticate: function(plainText) {
+	authenticate: function (plainText) {
 		return this.encryptPassword(plainText) === this.hashed_password;
 	},
 
-	makeSalt: function() {
+	makeSalt: function () {
 		return crypto.randomBytes(16).toString("base64");
 	},
 
-	encryptPassword: function(password) {
+	encryptPassword: function (password) {
 		if (!password || !this.salt) return "";
 		var salt = new Buffer(this.salt, "base64");
-		return crypto.pbkdf2Sync(password, salt, 10000, 64).toString("base64");
+		return crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString("base64");
 	}
 };
 

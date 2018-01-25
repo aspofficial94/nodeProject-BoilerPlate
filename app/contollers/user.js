@@ -4,8 +4,8 @@ var _ = require('lodash');
 var async = require('async');
 var moment = require('moment');
 
-var UserService = require('../services/user.server.service');
-var AuthService = require('../services/auth.service');
+var UserService = require('../services/user');
+var AuthService = require('../services/auth');
 
 exports.registerUser = function(req, res, next) {
 	var userObj = {
